@@ -1,0 +1,46 @@
+@use "/src/app/styles/_variables.scss" as vars;
+
+.landingPage {
+  min-height: 100vh;
+  background: vars.$wink-black;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: vars.$sp-32 vars.$sp-16;
+  max-width: 800px;
+  margin: 0 auto;
+
+}
+
+.title {
+  font-family: vars.$font-family;
+  font-weight: vars.$fw-bold;
+  color: vars.$wink-white;
+  text-align: center;
+  line-height: 1.2;
+  margin: 0 0 vars.$sp-24;
+  max-width: 800px;
+
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+
+  position: relative;
+  padding-bottom: vars.$sp-8;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 56%;
+    height: 3px;
+    margin: vars.$sp-16 auto 0;
+    border-radius: vars.$radius-4;
+    background: vars.$wink-orange-gradient;
+    box-shadow: 0 0 16px rgba(255, 90, 36, 0.35);
+  }
+}

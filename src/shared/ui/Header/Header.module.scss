@@ -1,0 +1,66 @@
+@use "/src/app/styles/_variables.scss" as vars;
+@use "/src/app/styles/_mixins.scss" as mix;
+
+.header {
+  height: 70px;
+  background: vars.$wink-black;
+  border-bottom: 1px solid vars.$wink-border;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 vars.$sp-24;
+  box-shadow: vars.$wink-shadow-md;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap:  vars.$sp-8;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: baseline;
+  gap:  vars.$sp-8;
+  color: vars.$wink-white;
+  font-family: vars.$logo-font-family;
+  font-size: 1.5rem;
+  font-weight: vars.$fw-bold;
+  padding: vars.$sp-8 0;
+  user-select: none;
+}
+
+.legal {
+  color: vars.$wink-orange;
+  font-size: 0.8rem;
+  font-weight: vars.$fw-medium;
+  opacity: 0.9;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: vars.$sp-24;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: vars.$sp-16;
+}
+
+.rating {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: vars.$sp-2 vars.$sp-16;
+  font-family: vars.$logo-font-family;
+  font-size: 1.5rem;
+  background-color: rgba(255, 90, 36, 0.2);
+  border: 1px solid rgba(255, 90, 36, 0.4);
+  border-radius: vars.$radius-8;
+  color: vars.$wink-white;
+  font-weight: 500;
+  white-space: nowrap;
+  text-align: center;
+
+}

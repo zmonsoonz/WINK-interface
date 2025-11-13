@@ -1,0 +1,67 @@
+@use "/src/app/styles/_variables.scss" as vars;
+
+.wrapper { display: flex; flex-direction: column; align-items: center; gap: vars.$sp-16; }
+
+.zone {
+  width: 400px; height: 220px;
+  border: 2px dashed vars.$wink-white;
+  border-radius: vars.$radius-12;
+  display: flex; align-items: center; justify-content: center;
+  background: vars.$wink-black;
+  color: vars.$wink-white;
+  transition: background-color .25s ease, border-color .25s ease;
+  cursor: pointer; position: relative; padding: vars.$sp-16;
+
+  &:hover { border-color: vars.$wink-orange; background: rgba(255, 90, 36, 0.05); }
+}
+
+.active { border-color: vars.$wink-orange; background: rgba(255, 90, 36, 0.05); }
+
+.content { text-align: center; pointer-events: none; }
+
+.iconCircle {
+  width: 64px; height: 64px; border: 2px dashed vars.$wink-white;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  margin: 0 auto vars.$sp-16; background: transparent;
+  transition: background .3s ease, border-color .3s ease;
+
+  .active & { background: vars.$wink-orange; border-color: vars.$wink-orange; }
+}
+
+.iconArrow { font-size: 1.5rem; color: vars.$wink-white; .active & { color: #fff; } }
+.title { margin: 0 0 vars.$sp-8; font-size: 1.1rem; font-weight: vars.$fw-semibold; color: vars.$wink-white; }
+
+.fileInput { display: none; }
+.pickFile { opacity: .7; }
+
+.filled { border-style: solid; border-color: rgba(255, 255, 255, 0.14); background: rgba(255,255,255,0.03); }
+
+.fileInfo {
+  width: 100%;
+  display: flex;justify-content: center; align-items: center; gap: vars.$sp-12;
+}
+.clearBtn {
+  border-radius: vars.$radius-4;
+}
+
+.fileBadge {
+  max-width: 100%;
+  display: inline-flex; align-items: center; gap: vars.$sp-8;
+  padding: vars.$sp-8 vars.$sp-12;
+  border-radius: vars.$radius-12;
+  background: rgba(255,255,255,0.06);
+  color: #fff; border: 1px solid rgba(255,255,255,0.12);
+}
+
+.fileIcon { font-size: 1rem; }
+.fileName {
+  max-width: 240px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.fileSize { opacity: .7; font-size: .9rem; }
+
+.actions { display: flex; gap: vars.$sp-8; }
+
+/* Подписи и ошибки */
+.hint { text-align: center; color: vars.$wink-white; font-size: .95rem; max-width: 420px; }
+.hintMuted { margin-top: vars.$sp-8; color: rgba(255, 255, 255, 0.55); }
+.errorText { color: #ff6a6a; }

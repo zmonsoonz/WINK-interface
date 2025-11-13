@@ -1,0 +1,62 @@
+@use "sass:color";
+@use 'variables' as vars;
+
+%button-base {
+  align-items: center;
+  appearance: none;
+  background: var(--btn-bg, var(--color-bogota));
+  background-image: vars.$wink-orange-gradient;
+  color: vars.$wink-white;
+  font-weight: vars.$fw-medium;
+  border: none;
+  border-radius: vars.$radius-20;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-flex !important;
+  gap: vars.$sp-8;
+  justify-content: center;
+  margin: 0;
+  max-width: 100%;
+  overflow: hidden;
+  padding: vars.$sp-8 vars.$sp-16;
+  text-align: center;
+  text-decoration: none;
+}
+
+@mixin button($bg) {
+  @extend %button-base;
+  position: relative;
+  background: $bg;
+  transition: none;
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: rgba(255,255,255,0);
+    transition: background-color 200ms ease;
+    pointer-events: none;
+  }
+
+  &:hover::after,
+  &:focus-visible::after { background: rgba(255,255,255,0.08); }
+  &:active::after { background: rgba(255,255,255,0.15); }
+}
+
+@mixin container($max: 1200px) {
+  width: 100%;
+  max-width: $max;
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@mixin media($break) {
+    @media (max-width: 1024px) { @content; }
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}

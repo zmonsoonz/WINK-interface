@@ -1,0 +1,60 @@
+// src/app/styles/style.scss
+@use './_variables.scss' as vars;
+@use './_mixins.scss' as mix;
+@use './_fonts.scss';
+@use './_reset.scss';
+@use './_utilities.scss';
+
+body {
+  font-family: vars.$font-family;
+  color: vars.$wink-white;
+  background-color: vars.$wink-black;
+  line-height: 1.6;
+}
+
+.app {
+  min-height: 100%;
+  background: vars.$wink-black;
+  color: vars.$wink-white;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: vars.$wink-white;
+  margin: 0 0 vars.$sp-16;
+  line-height: 1.2;
+}
+h1 { font-size: clamp(2rem, 4vw, 2.5rem); font-weight: vars.$fw-bold; }
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: vars.$fw-semibold; }
+
+a {
+  color: vars.$wink-orange;
+  &:hover { color: vars.$wink-orange-hover; }
+  &:focus-visible { outline: 2px solid vars.$wink-orange; }
+}
+
+.btn-primary {
+  @include mix.button(vars.$wink-orange-gradient);
+}
+
+.btn-secondary {
+  @include mix.button(vars.$wink-border);
+}
+
+.card {
+  background: vars.$wink-black;
+  border: 1px solid vars.$wink-border;
+  border-radius: vars.$radius-12;
+  box-shadow: vars.$wink-shadow-sm;
+  padding: vars.$sp-16;
+}
+
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-track { background: vars.$wink-black; }
+*::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+*::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.3); }
+
+.fade-in { animation: fade-in 0.25s ease-out; }
+.spin { animation: spin 1s linear infinite; }
