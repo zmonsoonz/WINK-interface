@@ -1,17 +1,17 @@
 import { useState } from 'react';
+import { API_BASE } from '@shared/lib/constants.ts';
 
 type Json = Record<string, unknown> | unknown[] | string | number | boolean | null;
 
-export function useApi(baseUrl = 'https://thin-tables-dress.loca.lt') {
+export function useApi() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   async function request<T = unknown>(path: string, init?: RequestInit): Promise<T> {
     setLoading(true);
     setError(null);
-    console.log(baseUrl + path);
     try {
-      const res = await fetch(baseUrl + path, init);
+      const res = await fetch(API_BASE + path, init);
       if (!res.ok) {
         let msg = `HTTP ${res.status}`;
         try {
