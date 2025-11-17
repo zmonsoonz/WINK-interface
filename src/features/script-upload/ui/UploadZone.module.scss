@@ -61,7 +61,69 @@
 
 .actions { display: flex; gap: vars.$sp-8; }
 
-/* Подписи и ошибки */
 .hint { text-align: center; color: vars.$wink-white; font-size: .95rem; max-width: 420px; }
 .hintMuted { margin-top: vars.$sp-8; color: rgba(255, 255, 255, 0.55); }
 .errorText { color: #ff6a6a; }
+
+.titleRow {
+  margin-top: vars.$sp-12;
+  width: 400px;
+  display: grid;
+  gap: vars.$sp-6;
+}
+.titleLabel {
+  font-size: .9rem;
+  color: rgba(255,255,255,0.88);
+}
+.titleInput {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: vars.$radius-12;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.titleInput:focus {
+  border-color: vars.$wink-orange;
+  box-shadow: 0 0 0 4px rgba(255, 90, 36, 0.18);
+}
+
+.loading { pointer-events: none; }
+
+.zoneSpinner {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  display: grid;
+  place-items: center;
+}
+.zoneSpinner::after {
+  content: "";
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.25);
+  border-top-color: vars.$wink-orange;
+  animation: spin 1.1s linear infinite;
+}
+
+.btnSpinner {
+  width: 1em; height: 1em;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-top-color: vars.$wink-orange;
+  margin-right: 8px;
+  display: inline-block;
+  vertical-align: -2px;
+  animation: spin 0.9s linear infinite;
+}
+.inputError {
+  margin-top: 6px;
+  color: #ff6b6b;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+

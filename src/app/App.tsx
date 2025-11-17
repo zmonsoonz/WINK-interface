@@ -3,12 +3,14 @@ import { LandingPage } from '@pages/LandingPage/LandingPage.tsx';
 import { Toaster } from 'react-hot-toast';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { AnalysisPage } from '@pages/AnalysisPage/AnalysisPage.tsx';
 
 export const App = () => (
   <>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/analysis" element={<AnalysisPage />} />
       </Routes>
     </BrowserRouter>
     <Toaster
