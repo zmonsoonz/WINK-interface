@@ -1,1 +1,1 @@
-export const API_BASE = 'https://thin-tables-dress.loca.lt';
+export const API_BASE = 'https://major-candles-battle.loca.lt';

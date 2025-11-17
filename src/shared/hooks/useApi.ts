@@ -26,7 +26,6 @@ export function useApi() {
       if (ct.includes('application/json')) {
         return (await res.json()) as T;
       }
-      // если не JSON – вернём как текст
       return (await res.text()) as unknown as T;
     } finally {
       setLoading(false);

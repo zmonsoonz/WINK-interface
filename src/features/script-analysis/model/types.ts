@@ -5,6 +5,7 @@ type Occurrence = {
   scene_number?: number;
   severity: string;
   recommendation: string;
+  justification: string;
 };
 
 type Category = {

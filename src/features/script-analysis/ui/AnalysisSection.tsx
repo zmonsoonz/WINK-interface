@@ -1,14 +1,14 @@
-// pages/AnalysisSection.tsx
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import styles from './AnalysisSection.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import type { Script } from '@features/script-analysis/model/types.ts';
+import type { Script } from '@features/script-analysis/model/types';
 import { Navigate, useLocation } from 'react-router-dom';
 
 type Rating = 'None' | 'Mild' | 'Moderate' | 'Severe';
 type CategoryKey = 'sex' | 'violence' | 'profanity' | 'substances' | 'frightening';
 type AnalysisNavState = { script: Script };
+type TabKey = 'rec' | 'just';
 
 const toRating = (s: string): Rating => {
   const v = (s || '').toLowerCase();
@@ -17,7 +17,6 @@ const toRating = (s: string): Rating => {
   if (v === 'severe') return 'Severe';
   return 'None';
 };
-
 const rateClass = (r: Rating) => styles['rate_' + r.toLowerCase()];
 
 export const AnalysisSection = () => {
@@ -28,19 +27,19 @@ export const AnalysisSection = () => {
     substances: null,
     frightening: null,
   });
+
   const { state } = useLocation();
   const nav = state as AnalysisNavState | null;
-
+  const [activeTabs, setActiveTabs] = useState<Record<number, TabKey>>({});
+  const setTab = (id: number, tab: TabKey) => setActiveTabs((s) => ({ ...s, [id]: tab }));
+  const getTab = (id: number): TabKey => activeTabs[id] ?? 'rec';
   if (!nav?.script) {
     return <Navigate to="/" replace />;
   }
-
   const script = nav.script;
 
   const scrollToCategory = (key: CategoryKey) => {
-    const el = sectionRefs.current[key];
-    if (!el) return;
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    sectionRefs.current[key]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   const ageClass = (rating: string) => {
@@ -68,20 +67,17 @@ export const AnalysisSection = () => {
             const key = c.type as CategoryKey;
             const aggregate = toRating(c.severity);
             return (
-              <button key={c.id} className={`${styles.summaryRow}`} onClick={() => scrollToCategory(key)}>
+              <button key={c.id} className={styles.summaryRow} onClick={() => scrollToCategory(key)}>
                 <div className={styles.summaryLeft}>
                   <span className={`${styles.indicator} ${rateClass(aggregate)}`} aria-hidden />
                   <span className={styles.summaryLabel}>{c.label}:</span>
                   <span className={`${styles.summaryRating} ${rateClass(aggregate)}`}>{aggregate}</span>
                 </div>
                 <div className={styles.summaryRight}>
-                  <span className={`${styles.counterBadge} ${styles.hasTooltip}`} data-tip="Violations count">
+                  <span className={`${styles.counterBadge} ${styles.hasTooltip}`} data-tip="Количество">
                     {c.occurrences_count}
                   </span>
-                  <span
-                    className={`${styles.percentBadge} ${styles.hasTooltip}`}
-                    data-tip="Percentage of scenes with violations"
-                  >
+                  <span className={`${styles.percentBadge} ${styles.hasTooltip}`} data-tip="Доля сцен с нарушением">
                     {c.percentage}%
                   </span>
                   <span className={styles.summaryChevron} aria-hidden>
@@ -116,24 +112,48 @@ export const AnalysisSection = () => {
             </header>
 
             {c.occurrences.length === 0 ? (
-              <div className={styles.empty}>None</div>
+              <div className={styles.empty}>Нет нарушений</div>
             ) : (
               <ul className={styles.itemList}>
                 {c.occurrences.map((o) => {
                   const r = toRating(o.severity);
+                  const tab = getTab(o.id);
+                  const description = o.description;
+                  const recommendation = o.recommendation || '';
+                  const justification = o.justification || '';
                   return (
                     <li key={o.id} className={styles.itemCard}>
                       <div className={styles.itemHeader}>
                         <span className={`${styles.itemPill} ${rateClass(r)}`}>{r}</span>
                         {o.scene_number != null && <span className={styles.sceneTag}>Scene: {o.scene_number}</span>}
                       </div>
-                      <pre className={styles.itemExcerpt}>{o.description}</pre>
-                      {o.recommendation && (
-                        <div className={styles.recBox}>
-                          <div className={styles.recLabel}>Рекомендация</div>
-                          <p className={styles.recText}>{o.recommendation}</p>
-                        </div>
-                      )}
+
+                      <pre className={styles.itemExcerpt}>{description}</pre>
+
+                      <div className={styles.itemTabs} role="tablist" aria-label="Дополнительная информация">
+                        <button
+                          type="button"
+                          className={`${styles.tabBtn} ${tab === 'rec' ? styles.tabActive : ''}`}
+                          role="tab"
+                          aria-selected={tab === 'rec'}
+                          onClick={() => setTab(o.id, 'rec')}
+                        >
+                          Рекомендация
+                        </button>
+                        <button
+                          type="button"
+                          className={`${styles.tabBtn} ${tab === 'just' ? styles.tabActive : ''}`}
+                          role="tab"
+                          aria-selected={tab === 'just'}
+                          onClick={() => setTab(o.id, 'just')}
+                        >
+                          Документация
+                        </button>
+                      </div>
+
+                      <div className={styles.tabPanel} role="tabpanel">
+                        <p className={styles.tabText}>{tab === 'just' ? justification : recommendation}</p>
+                      </div>
                     </li>
                   );
                 })}
